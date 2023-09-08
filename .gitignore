@@ -1,0 +1,13 @@
+# IDE
+.vscode
+
+# Private data
+textbooks
+
+# Env
+.env
+.venv
+run.sh
+
+# Caches
+**/__pycache__/**
