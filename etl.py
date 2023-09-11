@@ -1,5 +1,4 @@
 import logging
-
 import torch
 from langchain.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -7,15 +6,7 @@ from langchain.vectorstores import FAISS
 from langchain.embeddings import HuggingFaceEmbeddings
 
 _FILE_PATHS = (
-    "./textbooks/o_reilly/Essential_Math_for_Data_Science.pdf",
-    "./textbooks/o_reilly/Machine_Learning_SKLearn_Keras_TF.pdf",
-    # "./textbooks/Mastering_spaCy.epub",
-    # "./textbooks/Mastering_Transformers.pdf",
-    # "./textbooks/NLP_with_Transformers.pdf",
-    # "./textbooks/Practical_Statistics_for_Data_Scientists.pdf",
-    # "./textbooks/Statistical_Learning.pdf",
-    # "./textbooks/Text_as_Data.pdf",
-    "./textbooks/The_Data_Detective.pdf",
+    "media/Data_Science_for_Business.pdf"
 )
 
 
@@ -128,7 +119,7 @@ def etl(file_path=None, transformer=transform):
 
 
 if __name__ == "__main__":
-    file_path = _FILE_PATHS[1]
+    file_path = _FILE_PATHS
     db = etl(file_path=file_path, transformer=transform_o_reilly)
 
     # file_path = _FILE_PATHS[-1]

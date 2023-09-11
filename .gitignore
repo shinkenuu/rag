@@ -3,6 +3,8 @@
 
 # Private data
 textbooks
+media
+llama-gpt
 
 # Env
 .env

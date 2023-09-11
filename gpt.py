@@ -1,5 +1,3 @@
-from os import environ
-
 from torch import bfloat16, cuda, eq, FloatTensor, LongTensor
 from transformers import (
     AutoConfig,
@@ -25,7 +23,7 @@ bnb_config = BitsAndBytesConfig(
 )
 
 # begin initializing HF items, you need an access token
-hf_auth = environ.get("HF_AUTH")
+hf_auth = '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'
 model_config = AutoConfig.from_pretrained(model_id, use_auth_token=hf_auth)
 
 model = AutoModelForCausalLM.from_pretrained(
