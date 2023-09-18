@@ -1,26 +1,31 @@
 import logging
 import torch
+import os
 from langchain.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import FAISS
+from langchain.vectorstores import FAISS, Weaviate
 from langchain.embeddings import HuggingFaceEmbeddings
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.document_loaders import TextLoader
+
+os.environ("OPENAI_SECRET_KEY", "")
 
 _FILE_PATHS = (
     "media/Data_Science_for_Business.pdf"
 )
 
-
 ### FOLLOW THIS
 # https://medium.com/@murtuza753/using-llama-2-0-faiss-and-langchain-for-question-answering-on-your-own-data-682241488476
 
-
-_MODEL_NAME = "sentence-transformers/all-mpnet-base-v2"
-embeddings = HuggingFaceEmbeddings(
-    model_name=_MODEL_NAME, 
-    model_kwargs={
-       "device": "cuda:0" if torch.cuda.is_available() else "cpu"
-    }
-)
+#HUGGINGFACE
+# _MODEL_NAME = "sentence-transformers/all-mpnet-base-v2"
+# embeddings = HuggingFaceEmbeddings(
+#     model_name=_MODEL_NAME, 
+#     model_kwargs={
+#        "device": "cuda:0" if torch.cuda.is_available() else "cpu"
+#     }
+# )
 
 
 _CHUNK_SIZE = 4000
@@ -38,6 +43,16 @@ _SPLITTER = RecursiveCharacterTextSplitter(
     separators=_SEPARATORS,
 )
 
+loader = TextLoader("path/to/file.pdf")
+documents = loader.load()
+docs = _SPLITTER.split_documents(documents)
+
+embeddings = OpenAIEmbeddings()
+
+db = Weaviate.from_documents(docs, embeddings, weaviate_url=WEAVIATE_URL, by_text=False)
+
+query = "Can you explain me how to use standard deviation?"
+docs = db.similarity_search(query)
 
 def extract(file_path: str):
     loader = PyPDFLoader(file_path)
