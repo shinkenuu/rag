@@ -9,7 +9,11 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 
 from constants import WEAVIATE_URL
 
-_FILE_PATHS = "./textbooks/Data_Science_for_Business.pdf"
+_FILE_PATHS =  (
+    "media/capoferro.pdf",
+    "media/activision.pdf",
+    "media/blue_ocean_strategy.pdf"
+)
 
 _CHUNK_SIZE = 4000
 _CHUNK_OVERLAP = 20
